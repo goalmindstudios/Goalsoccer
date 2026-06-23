@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GoalMind Studios — Sports apps that think</title>
+<meta name="description" content="GoalMind Studios builds intelligent sports apps: live scores, on-device predictions, and ball-by-ball analytics for football and cricket fans." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0A141C;
+    --surface:#0F1F2B;
+    --surface-2:#16293A;
+    --line:rgba(180,205,225,.10);
+    --line-strong:rgba(180,205,225,.18);
+    --warm:#FF7A59;     /* momentum / your side */
+    --warm-soft:rgba(255,122,89,.14);
+    --cool:#45C8FF;     /* data / opponent */
+    --cool-soft:rgba(69,200,255,.14);
+    --text:#EAF2F8;
+    --muted:#8DA2B3;
+    --muted-2:#5E7383;
+    --max:1180px;
+    --r:18px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(900px 520px at 78% -8%, rgba(69,200,255,.10), transparent 60%),
+      radial-gradient(760px 460px at 8% 4%, rgba(255,122,89,.10), transparent 58%);
+    pointer-events:none;z-index:0;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.02em;line-height:1.05}
+  .num{font-family:"Saira Condensed",sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .eyebrow{
+    font-family:"Saira Condensed",sans-serif;font-weight:600;
+    text-transform:uppercase;letter-spacing:.28em;font-size:.78rem;color:var(--muted);
+  }
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);
+    background:rgba(10,20,28,.62);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.06rem}
+  .mark{width:30px;height:30px;border-radius:9px;position:relative;flex:none;
+    background:linear-gradient(135deg,var(--warm),var(--cool));
+    display:grid;place-items:center}
+  .mark::after{content:"";width:11px;height:11px;border-radius:50%;background:var(--ink);
+    box-shadow:0 0 0 3px rgba(10,20,28,.0)}
+  .brand b{font-weight:600}
+  .brand span{color:var(--muted)}
+  .links{display:flex;gap:30px;align-items:center}
+  .links a{color:var(--muted);font-size:.95rem;font-weight:500;transition:color .2s}
+  .links a:hover{color:var(--text)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.93rem;
+    padding:11px 18px;border-radius:11px;border:1px solid transparent;cursor:pointer;transition:.2s}
+  .btn-pri{background:var(--text);color:var(--ink)}
+  .btn-pri:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,255,255,.08)}
+  .btn-ghost{border-color:var(--line-strong);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--cool);color:var(--cool)}
+  .nav .btn{padding:9px 16px}
+  .menu-btn{display:none;background:none;border:0;color:var(--text);cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:78px 0 36px;position:relative}
+  .pitch{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none;
+    -webkit-mask-image:radial-gradient(70% 60% at 30% 30%,#000,transparent 75%);
+            mask-image:radial-gradient(70% 60% at 30% 30%,#000,transparent 75%)}
+  .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center;position:relative;z-index:1}
+  .tag{display:inline-flex;align-items:center;gap:9px;padding:7px 13px;border:1px solid var(--line-strong);
+    border-radius:100px;font-size:.82rem;color:var(--muted);margin-bottom:24px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--warm);position:relative}
+  .dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--warm);
+    animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+  h1.title{font-size:clamp(2.5rem,5.6vw,4rem);font-weight:700}
+  h1.title em{font-style:normal;background:linear-gradient(120deg,var(--warm),var(--cool));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{color:var(--muted);font-size:1.13rem;max-width:30ch;margin:22px 0 32px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-stats{display:flex;gap:34px;margin-top:44px;flex-wrap:wrap}
+  .hero-stats .k{font-size:2rem;font-weight:700;color:var(--text);line-height:1}
+  .hero-stats .l{font-size:.83rem;color:var(--muted);margin-top:6px}
+
+  /* match card signature */
+  .card{background:linear-gradient(180deg,var(--surface),var(--surface-2));
+    border:1px solid var(--line-strong);border-radius:24px;padding:24px;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+  .card-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.8rem}
+  .live{display:inline-flex;align-items:center;gap:7px;color:var(--warm);font-weight:600;font-size:.78rem;
+    text-transform:uppercase;letter-spacing:.1em}
+  .live .dot{background:var(--warm)}
+  .score-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin:20px 0 6px}
+  .team{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .crest{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-family:"Space Grotesk";font-weight:700;font-size:1.15rem}
+  .crest.a{background:var(--warm-soft);color:var(--warm);border:1px solid rgba(255,122,89,.3)}
+  .crest.b{background:var(--cool-soft);color:var(--cool);border:1px solid rgba(69,200,255,.3)}
+  .team small{color:var(--muted);font-size:.82rem;font-weight:500}
+  .score{font-family:"Saira Condensed";font-weight:700;font-size:2.7rem;line-height:1}
+  .clock{text-align:center;color:var(--muted);font-family:"Saira Condensed";font-weight:600;font-size:1.05rem}
+  .wp-label{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.14em;margin:18px 0 9px}
+  .wp{height:10px;border-radius:100px;background:var(--cool);overflow:hidden;position:relative}
+  .wp i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--warm);
+    border-radius:100px;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+  .wp-vals{display:flex;justify-content:space-between;margin-top:9px;font-family:"Saira Condensed";font-weight:600}
+  .wp-vals .a{color:var(--warm)}.wp-vals .b{color:var(--cool)}
+  .pred{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;font-size:.86rem}
+  .pred span{color:var(--muted)}
+  .pred b{color:var(--text);font-weight:600}
+  .chip{font-size:.74rem;padding:4px 10px;border-radius:100px;background:var(--warm-soft);color:var(--warm);font-weight:600}
+
+  /* ---------- TICKER ---------- */
+  .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin-top:40px;padding:14px 0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .ticker-track{display:flex;gap:42px;width:max-content;animation:scroll 38s linear infinite}
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  .tick{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.92rem;white-space:nowrap}
+  .tick .sc{font-family:"Saira Condensed";font-weight:700;color:var(--text);font-size:1.05rem}
+  .tick .vs{color:var(--muted-2)}
+  .tick .fl{width:7px;height:7px;border-radius:50%;background:var(--cool)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:84px 0;position:relative;z-index:1}
+  .head{max-width:620px;margin-bottom:48px}
+  .head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);margin:14px 0 14px}
+  .head p{color:var(--muted);font-size:1.06rem}
+
+  /* apps */
+  .apps{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .app{border:1px solid var(--line-strong);border-radius:24px;padding:32px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--surface),rgba(15,31,43,.4));transition:.3s}
+  .app:hover{transform:translateY(-4px);border-color:var(--accent)}
+  .app::before{content:"";position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;
+    background:var(--glow);filter:blur(40px);opacity:.5}
+  .app.football{--accent:var(--warm);--glow:var(--warm-soft)}
+  .app.cricket{--accent:var(--cool);--glow:var(--cool-soft)}
+  .app-icon{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:1.5rem;
+    background:rgba(255,255,255,.04);border:1px solid var(--line-strong);position:relative;z-index:1}
+  .app h3{font-size:1.45rem;margin:20px 0 4px;position:relative;z-index:1}
+  .app .kind{color:var(--accent);font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;position:relative;z-index:1}
+  .app p{color:var(--muted);margin:14px 0 22px;font-size:.97rem;position:relative;z-index:1}
+  .feat{list-style:none;display:grid;gap:11px;position:relative;z-index:1}
+  .feat li{display:flex;gap:11px;align-items:flex-start;font-size:.94rem;color:var(--text)}
+  .feat svg{flex:none;margin-top:3px;color:var(--accent)}
+  .app-foot{margin-top:26px;display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+  .store{font-size:.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:7px}
+
+  /* capabilities */
+  .caps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .cap{border:1px solid var(--line);border-radius:16px;padding:24px;background:rgba(15,31,43,.4);transition:.25s}
+  .cap:hover{border-color:var(--line-strong);background:var(--surface)}
+  .cap .n{font-family:"Saira Condensed";font-weight:700;font-size:.95rem;color:var(--muted-2);letter-spacing:.06em}
+  .cap h3{font-size:1.1rem;margin:14px 0 8px}
+  .cap p{color:var(--muted);font-size:.9rem}
+
+  /* metrics band */
+  .band{border:1px solid var(--line-strong);border-radius:24px;
+    background:linear-gradient(120deg,var(--surface),var(--surface-2));
+    padding:46px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .band .m .k{font-family:"Saira Condensed";font-weight:700;font-size:2.7rem;line-height:1;
+    background:linear-gradient(120deg,var(--warm),var(--cool));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .band .m .l{color:var(--muted);font-size:.9rem;margin-top:8px}
+
+  /* cta */
+  .final{text-align:center;padding:96px 0}
+  .final h2{font-size:clamp(2rem,4.4vw,3.1rem);max-width:16ch;margin:0 auto 20px}
+  .final p{color:var(--muted);max-width:46ch;margin:0 auto 30px;font-size:1.08rem}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:42px 0;position:relative;z-index:1}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot .links a{color:var(--muted);font-size:.92rem}
+  .foot .copy{color:var(--muted-2);font-size:.86rem}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .lede{max-width:none}
+    .apps,.caps,.band{grid-template-columns:1fr}
+    .caps{gap:14px}
+    .band{padding:32px 24px}
+    .links{display:none}
+    .menu-btn{display:block}
+    .nav .btn-pri{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="mark"></span><b>GoalMind</b><span>Studios</span></a>
+    <nav class="links">
+      <a href="#apps">Apps</a>
+      <a href="#build">What we build</a>
+      <a href="#about">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-pri" href="#apps">View apps →</a>
+    <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('.links').scrollIntoView()">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="pitch" viewBox="0 0 1180 560" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="rgba(120,160,190,.16)" stroke-width="1.2">
+        <rect x="40" y="40" width="1100" height="480" rx="6"/>
+        <line x1="590" y1="40" x2="590" y2="520"/>
+        <circle cx="590" cy="280" r="78"/>
+        <rect x="40" y="170" width="150" height="220"/>
+        <rect x="990" y="170" width="150" height="220"/>
+        <rect x="40" y="232" width="62" height="96"/>
+        <rect x="1078" y="232" width="62" height="96"/>
+      </g>
+      <circle cx="590" cy="280" r="4" fill="rgba(120,160,190,.4)"/>
+    </svg>
+
+    <div class="wrap hero-grid">
+      <div>
+        <span class="tag"><span class="dot"></span> Live scores · On-device predictions</span>
+        <h1 class="title">Sports apps that <em>think</em>.</h1>
+        <p class="lede">We build fast, beautiful apps for football and cricket fans — real-time scores, ball-by-ball analytics, and predictions that run right on your phone.</p>
+        <div class="cta-row">
+          <a class="btn btn-pri" href="#apps">Explore our apps →</a>
+          <a class="btn btn-ghost" href="#contact">Work with us</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="k num">2</div><div class="l">apps shipping</div></div>
+          <div><div class="k num">100%</div><div class="l">on-device AI</div></div>
+          <div><div class="k num">0ms</div><div class="l">cloud round-trips for inference</div></div>
+        </div>
+      </div>
+
+      <!-- signature: live match + win probability -->
+      <div class="card" id="matchcard">
+        <div class="card-top">
+          <span class="live"><span class="dot"></span> Live</span>
+          <span>Matchday · AiGoal Score</span>
+        </div>
+        <div class="score-row">
+          <div class="team">
+            <div class="crest a">RM</div>
+            <small>Madrid</small>
+          </div>
+          <div>
+            <div class="score num">2&nbsp;–&nbsp;1</div>
+            <div class="clock num">74'</div>
+          </div>
+          <div class="team">
+            <div class="crest b">BAR</div>
+            <small>Barça</small>
+          </div>
+        </div>
+
+        <div class="wp-label"><span>Win probability</span><span>updated live</span></div>
+        <div class="wp"><i id="wpbar"></i></div>
+        <div class="wp-vals"><span class="a num">68%</span><span class="b num">21%</span></div>
+
+        <div class="pred">
+          <span>Model call · <b>Madrid to hold</b></span>
+          <span class="chip">Confidence 71%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- live ticker -->
+    <div class="wrap">
+      <div class="ticker">
+        <div class="ticker-track" id="ticker"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPS -->
+  <section id="apps">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">Our apps</span>
+        <h2>Two products, one obsession: getting fans closer to the game.</h2>
+        <p>Native, premium, and built to feel instant — whether you follow a Champions League night or a cricket run chase going to the wire.</p>
+      </div>
+
+      <div class="apps">
+        <article class="app football reveal">
+          <div class="app-icon">⚽</div>
+          <div class="kind">Football</div>
+          <h3>AiGoal Score</h3>
+          <p>Live scores, lineups, and an AI prediction engine that builds accumulator slips and calls match momentum in real time.</p>
+          <ul class="feat">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Real-time scores &amp; live win probability</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> AI accumulator prediction slips</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Built native with Jetpack Compose</li>
+          </ul>
+          <div class="app-foot">
+            <span class="store">▶ Google Play · coming soon</span>
+          </div>
+        </article>
+
+        <article class="app cricket reveal">
+          <div class="app-icon">🏏</div>
+          <div class="kind">Cricket</div>
+          <h3>PitchPulse</h3>
+          <p>Ball-by-ball analytics with a live win-probability model and projected score tables — the numbers serious fans actually want.</p>
+          <ul class="feat">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> On-device win-probability inference</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Projected score &amp; run-rate tables</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Live ball-by-ball data feed</li>
+          </ul>
+          <div class="app-foot">
+            <span class="store">▶ In development</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILD -->
+  <section id="build">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="eyebrow">What we build</span>
+        <h2>The hard parts, done properly.</h2>
+        <p>Live sports apps live or die on speed and trust. We engineer for both.</p>
+      </div>
+      <div class="caps">
+        <div class="cap reveal">
+          <div class="n">01</div>
+          <h3>On-device models</h3>
+          <p>Predictions run locally with logistic-regression inference — no waiting on a server, no data leaving the phone.</p>
+        </div>
+        <div class="cap reveal">
+          <div class="n">02</div>
+          <h3>Live data feeds</h3>
+          <p>Ball-by-ball and minute-by-minute pipelines delivered through edge workers for low-latency updates.</p>
+        </div>
+        <div class="cap reveal">
+          <div class="n">03</div>
+          <h3>Native UI craft</h3>
+          <p>Jetpack Compose interfaces tuned to feel instant, with motion and detail at a premium standard.</p>
+        </div>
+        <div class="cap reveal">
+          <div class="n">04</div>
+          <h3>Predictions &amp; slips</h3>
+          <p>Momentum calls, accumulator builders, and projected outcomes — explained, not just dumped as numbers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / METRICS -->
+  <section id="about">
+    <div class="wrap">
+      <div class="band reveal">
+        <div class="m"><div class="k">2</div><div class="l">apps in active development</div></div>
+        <div class="m"><div class="k">2</div><div class="l">sports verticals: football &amp; cricket</div></div>
+        <div class="m"><div class="k">∞</div><div class="l">matches tracked, on-device</div></div>
+        <div class="m"><div class="k">1</div><div class="l">indie studio, shipping relentlessly</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="contact" class="final">
+    <div class="wrap reveal">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Building in the sports space? Let's talk.</h2>
+      <p>Partnerships, data feeds, publishing, or just curious what we're working on next — reach out.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-pri" href="mailto:hello@goalmindstudios.com">hello@goalmindstudios.com</a>
+        <a class="btn btn-ghost" href="#apps">See the apps</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><span class="mark"></span><b>GoalMind</b><span>Studios</span></a>
+    <nav class="links" style="display:flex">
+      <a href="#apps">Apps</a>
+      <a href="#build">What we build</a>
+      <a href="mailto:hello@goalmindstudios.com">Contact</a>
+    </nav>
+    <div class="copy">© <span id="yr"></span> GoalMind Studios</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // win-probability bar fill on load
+  window.addEventListener('load', ()=>{
+    requestAnimationFrame(()=>{ document.getElementById('wpbar').style.width = '68%'; });
+  });
+
+  // live ticker content (duplicated for seamless loop)
+  const fixtures = [
+    ['Arsenal','1','Chelsea','1','67\''],
+    ['Liverpool','3','Spurs','0','FT'],
+    ['India','198/4','Australia','—','38.2 ov'],
+    ['Bayern','2','Dortmund','2','81\''],
+    ['Pakistan','164/6','England','—','19.1 ov'],
+    ['Inter','0','Milan','1','HT'],
+    ['PSG','4','Lyon','1','FT'],
+  ];
+  const row = fixtures.map(f=>
+    `<span class="tick"><span class="fl"></span>${f[0]} <span class="sc">${f[1]}</span><span class="vs">–</span><span class="sc">${f[3]}</span> ${f[2]} <span class="vs">· ${f[4]}</span></span>`
+  ).join('');
+  document.getElementById('ticker').innerHTML = row + row;
+
+  // scroll reveals
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
+
