@@ -1,68 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delete Your Account — AiGoal Score</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Delete Your Account &amp; Data — Football Live TV Stream AiGoal</title>
+<meta name="description" content="Request deletion of your account and associated data for Football Live TV Stream AiGoal by GoalMind Studios." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
 <style>
-  :root{--bg:#0b1020;--card:#121a2e;--txt:#e8edf6;--sub:#9aa6bd;--acc:#2BE588;--bd:#22304d}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
-  .wrap{max-width:780px;margin:0 auto;padding:40px 22px 80px}
-  header{border-bottom:1px solid var(--bd);padding-bottom:22px;margin-bottom:30px}
-  h1{font-size:28px;margin:0 0 6px;font-weight:800}
-  .meta{color:var(--sub);font-size:14px}
-  h2{font-size:19px;margin:30px 0 10px;color:#fff}
-  p,li{font-size:15.5px}
-  a{color:var(--acc);text-decoration:none}
-  a:hover{text-decoration:underline}
-  ol,ul{padding-left:22px}
-  li{margin:8px 0}
-  code{background:#0006;padding:2px 6px;border-radius:5px;color:var(--acc)}
-  .note{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;margin:18px 0}
-  footer{margin-top:46px;border-top:1px solid var(--bd);padding-top:20px;color:var(--sub);font-size:13.5px}
+  :root{
+    --pitch:#0a1410;
+    --pitch-2:#0e1c16;
+    --line:#1d3a2c;
+    --turf:#22c55e;
+    --turf-dim:#16a34a;
+    --ink:#e8f1ec;
+    --muted:#8aa499;
+    --card:#101f18;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(34,197,94,.10), transparent 60%),
+      var(--pitch);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:32px 22px 80px}
+
+  /* header */
+  .brand{display:flex;align-items:center;gap:14px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+  .badge{
+    width:52px;height:52px;border-radius:13px;flex:none;
+    background:linear-gradient(145deg,var(--turf),var(--turf-dim));
+    display:grid;place-items:center;font-size:26px;
+    box-shadow:0 8px 24px rgba(34,197,94,.25);
+  }
+  .brand h2{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.45rem;letter-spacing:.5px;text-transform:uppercase}
+  .brand small{display:block;color:var(--muted);font-size:.82rem;letter-spacing:.4px;text-transform:none;font-family:"Space Grotesk",sans-serif;font-weight:400}
+
+  /* hero */
+  .eyebrow{
+    display:inline-block;margin-top:42px;font-family:"Saira Condensed",sans-serif;
+    font-weight:600;letter-spacing:3px;text-transform:uppercase;font-size:.78rem;
+    color:var(--turf);padding:5px 12px;border:1px solid var(--line);border-radius:999px;
+  }
+  h1{
+    font-family:"Saira Condensed",sans-serif;font-weight:700;text-transform:uppercase;
+    font-size:clamp(2.1rem,7vw,3.2rem);line-height:1.02;letter-spacing:.5px;margin:14px 0 10px;
+  }
+  h1 span{color:var(--turf)}
+  .lede{color:var(--muted);font-size:1.02rem;max-width:60ch}
+
+  /* app reference card — the part Google needs */
+  .appcard{
+    margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;display:grid;gap:6px;
+  }
+  .appcard .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    padding:7px 0;border-bottom:1px dashed rgba(29,58,44,.7)}
+  .appcard .row:last-child{border-bottom:0}
+  .appcard .k{color:var(--muted);font-size:.85rem;letter-spacing:.3px}
+  .appcard .v{font-weight:600;text-align:right}
+
+  section{margin-top:40px}
+  h3{
+    font-family:"Saira Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+    font-size:1.25rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;
+  }
+  h3::before{content:"";width:9px;height:9px;border-radius:2px;background:var(--turf);transform:rotate(45deg);flex:none}
+  p{color:#cfe0d8;margin-bottom:12px}
+  ul{list-style:none;display:grid;gap:9px;margin:6px 0 4px}
+  li{position:relative;padding-left:24px;color:#cfe0d8}
+  li::before{content:"▸";position:absolute;left:4px;color:var(--turf);font-size:.9rem;top:1px}
+
+  .steps{counter-reset:s;display:grid;gap:14px;margin-top:8px}
+  .step{position:relative;padding:16px 18px 16px 60px;background:var(--pitch-2);
+    border:1px solid var(--line);border-radius:var(--radius)}
+  .step::before{
+    counter-increment:s;content:counter(s);position:absolute;left:16px;top:14px;
+    width:30px;height:30px;border-radius:8px;background:var(--turf);color:#04140b;
+    font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:1.1rem;display:grid;place-items:center;
+  }
+  .step b{color:var(--ink)}
+
+  .mail{
+    display:inline-flex;align-items:center;gap:9px;margin-top:4px;
+    background:linear-gradient(145deg,var(--turf),var(--turf-dim));color:#04140b;
+    font-weight:700;text-decoration:none;padding:13px 22px;border-radius:11px;
+    letter-spacing:.3px;box-shadow:0 8px 22px rgba(34,197,94,.25);transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .mail:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(34,197,94,.32)}
+
+  .note{margin-top:14px;font-size:.9rem;color:var(--muted);
+    border-left:3px solid var(--turf);padding:4px 0 4px 14px;background:rgba(34,197,94,.04)}
+
+  footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.85rem;display:grid;gap:4px}
+  footer b{color:var(--ink)}
+  a.inline{color:var(--turf);text-decoration:none}
+  a.inline:hover{text-decoration:underline}
+
+  @media (max-width:480px){
+    .appcard .v{text-align:left}
+    .appcard .row{flex-direction:column;gap:2px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Delete Your Account &amp; Data</h1>
-    <div class="meta"><strong>AiGoal Score</strong> · by GoalMind Studios</div>
-  </header>
+  <main class="wrap">
+    <header class="brand">
+      <div class="badge">⚽</div>
+      <div>
+        <h2>Football Live TV Stream AiGoal</h2>
+        <small>by Mysticcraftz · GoalMind Studios</small>
+      </div>
+    </header>
 
-  <p>You can request deletion of your <strong>AiGoal Score</strong> account and all associated data at any time.
-  Follow the steps below.</p>
+    <span class="eyebrow">Account &amp; Data</span>
+    <h1>Delete your <span>account &amp; data</span></h1>
+    <p class="lede">
+      This page explains how to request deletion of your account and the data associated with it in the
+      <strong>Football Live TV Stream AiGoal</strong> mobile app, developed by <strong>Mysticcraftz</strong>
+      (<strong>GoalMind Studios</strong>).
+    </p>
 
-  <h2>How to request deletion</h2>
-  <ol>
-    <li>Send an email to <code>goalmindstudiospro@gmail.com</code> from the email address linked to your account
-    (or include your in-app display name if you use Guest mode).</li>
-    <li>Use the subject line: <strong>"Delete my AiGoal Score account"</strong>.</li>
-    <li>We will verify the request and permanently delete your account within <strong>7 days</strong>.</li>
-  </ol>
+    <!-- This card carries the app/developer reference Google Play requires -->
+    <div class="appcard">
+      <div class="row"><span class="k">App name</span><span class="v">Football Live TV Stream AiGoal</span></div>
+      <div class="row"><span class="k">Package ID</span><span class="v">com.mysticcraftz.goalpulse</span></div>
+      <div class="row"><span class="k">Developer</span><span class="v">Mysticcraftz</span></div>
+      <div class="row"><span class="k">Company</span><span class="v">GoalMind Studios</span></div>
+      <div class="row"><span class="k">Contact</span><span class="v">support@goalmindstudios.com</span></div>
+    </div>
 
-  <div class="note">
-    You can also delete your account directly inside the app:
-    <strong>Profile → Settings → Delete Account</strong> (where available).
-  </div>
+    <section>
+      <h3>How to request deletion</h3>
+      <p>Send us a deletion request by email and we’ll remove your account and associated data from our systems.</p>
+      <div class="steps">
+        <div class="step">
+          Email <b>support@goalmindstudios.com</b> from the email address linked to your account in
+          Football Live TV Stream AiGoal.
+        </div>
+        <div class="step">
+          Use the subject line <b>“Delete my account — Football Live TV Stream AiGoal”</b> so we can find it quickly.
+        </div>
+        <div class="step">
+          If you signed in without an email, include your in-app <b>User ID</b> (found in the app’s
+          Settings screen) so we can identify your account.
+        </div>
+        <div class="step">
+          We confirm and complete the deletion within <b>30 days</b> and email you once it’s done.
+        </div>
+      </div>
+      <a class="mail" href="mailto:support@goalmindstudios.com?subject=Delete%20my%20account%20%E2%80%94%20Football%20Live%20TV%20Stream%20AiGoal">✉ Email a deletion request</a>
+    </section>
 
-  <h2>What data is deleted</h2>
-  <ul>
-    <li>Your account identifier (Google or Guest), name, email, and profile photo.</li>
-    <li>Your predictions, statistics (wins, XP, streaks), and leaderboard entries.</li>
-    <li>Your notification token and app activity data.</li>
-  </ul>
+    <section>
+      <h3>What gets deleted</h3>
+      <p>When your request is processed, we permanently delete the data tied to your account, including:</p>
+      <ul>
+        <li>Your account identifier and sign-in details</li>
+        <li>App preferences and saved settings</li>
+        <li>Push-notification token used to send match alerts</li>
+        <li>In-app activity associated with your account (such as viewing presence)</li>
+      </ul>
+    </section>
 
-  <h2>What data is kept</h2>
-  <ul>
-    <li>Anonymized, aggregated analytics that cannot identify you may be retained.</li>
-    <li>Records we are required to keep for legal or fraud-prevention purposes, for the minimum period required by law.</li>
-  </ul>
+    <section>
+      <h3>What we may keep, and for how long</h3>
+      <p>
+        We may retain a limited amount of information where the law requires it or to prevent fraud and abuse —
+        for example, transaction or security records. Such data is kept only as long as legally necessary and is
+        not used to re-create your account. Anonymous, aggregated analytics that cannot identify you may be retained.
+      </p>
+      <p class="note">
+        Third-party services used by the app (for example, Google Firebase for app infrastructure and ad partners)
+        process data under their own policies. Deleting your account removes your data from our systems; you can also
+        manage device-level identifiers in your phone’s settings.
+      </p>
+    </section>
 
-  <p>For any questions, contact us at <code>goalmindstudiospro@gmail.com</code>. See our
-  <a href="privacy-policy.html">Privacy Policy</a> for more details.</p>
+    <section>
+      <h3>Questions</h3>
+      <p>
+        For anything about your account or this process, contact us at
+        <a class="inline" href="mailto:support@goalmindstudios.com">support@goalmindstudios.com</a>.
+        See also our <a class="inline" href="privacy-policy.html">Privacy Policy</a>.
+      </p>
+    </section>
 
-  <footer>© 2026 GoalMind Studios · AiGoal Score</footer>
-</div>
+    <footer>
+      <span><b>Football Live TV Stream AiGoal</b> — com.mysticcraftz.goalpulse</span>
+      <span>© <span id="yr"></span> Mysticcraftz · GoalMind Studios</span>
+    </footer>
+  </main>
+  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 </body>
 </html>
